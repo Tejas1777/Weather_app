@@ -1,0 +1,58 @@
+.weather-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+   }
+   .weather-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+   .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+   }
+   .modal-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+   }
+   .close-button {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #888;
+   }
+   .close-button:hover {
+    color: #333;
+   }
+   .modal-content p {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 10px 0;
+   }
+   .modal-content strong {
+    color: #333;
+   }
+   @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+   }

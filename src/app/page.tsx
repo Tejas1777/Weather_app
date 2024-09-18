@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react';
-import CountryCard from './components/CountryCard';
-import WeatherModal from './components/WeatherModal';
+import CountryCard from './components/Countrycards/CountryCard';
+import WeatherModal from './components/Weathermodal/WeatherModal';
 import { fetchCountries } from './services/countryService'
 import { fetchWeather } from './services/weatherService';
 import './styles/global.css'
+
 interface Country {
  name: string;
  flag: string;
@@ -41,7 +42,6 @@ const HomePage = () => {
 <div className="country-grid">
      {countries.map((country) => (
 <CountryCard
-         key={country.alpha3Code}
          name={country.name}
          flag={country.flag}
          capital={country.capital}
