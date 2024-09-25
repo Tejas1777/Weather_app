@@ -1,6 +1,9 @@
+'use clien'
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { WeatherProvider } from './components/Weathermodal/WeatherContext';
+import './styles/global.css';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <WeatherProvider>
+         {children}
+</WeatherProvider>
+        =
       </body>
     </html>
   );

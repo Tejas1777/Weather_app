@@ -5,6 +5,7 @@ interface WeatherModalProps {
  isOpen: boolean;
  onRequestClose: () => void;
  weatherData: any;
+ 
 }
 const WeatherModal: React.FC<WeatherModalProps> = ({ isOpen, onRequestClose, weatherData }) => {
  useEffect(() => {

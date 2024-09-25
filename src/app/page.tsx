@@ -1,47 +1,50 @@
 'use client'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CountryCard from './components/Countrycards/CountryCard';
 import WeatherModal from './components/Weathermodal/WeatherModal';
-import { fetchCountries } from './services/countryService'
-import { fetchWeather } from './services/weatherService';
-import './styles/global.css'
+import { useWeatherContext } from './components/Weathermodal/WeatherContext';
+import './styles/global.css';
+import { useRouter } from 'next/router';
 
-interface Country {
- name: string;
- flag: string;
- capital: string;
- region: string;
- alpha3Code: string;
-}
 const HomePage = () => {
- const [countries, setCountries] = useState<Country[]>([]);
- const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
- const [weatherData, setWeatherData] = useState<any>(null);
- const [isModalOpen, setIsModalOpen] = useState(false);
- useEffect(() => {
-   fetchCountries()
-     .then(setCountries)
-     .catch(console.error);
- }, []);
- const handleWeatherClick = async (country: Country) => {
-   try {
-     const data = await fetchWeather(country.capital);
-     console.log("data",data)
-     setWeatherData(data);
-     setSelectedCountry(country);
-     setIsModalOpen(true);
-   } catch (error) {
-     console.error('Error fetching weather data:', error);
-   }
- };
+ const { countries, selectedCountry, isModalOpen, weatherData, handleWeatherClick, setIsModalOpen } = useWeatherContext();
+ const [loading, setLoading] = useState(true)
+ 
  const closeModal = () => {
    setIsModalOpen(false);
-   setSelectedCountry(null);
  };
+ const User = localStorage.getItem("email")
+useEffect(()=>{
+     const checkUser = () => {
+          if (!User) {
+               window.location.href = '/loginn'
+          } else {
+               setLoading(false)
+          }
+
+     };
+     checkUser();
+},[User])
+ 
+ 
+ const logout = () => {
+     localStorage.clear()
+     window.location.href= '/loginn'
+ }
+
+ if (loading) {
+     return <div className='loading'>Loading...</div>
+ }
  return (
+     <>
+     <button className='logout' onClick={logout}>Log out</button>
+     <h2 className='message'>Welcome, {User}</h2>
+     
 <div className="country-grid">
+
      {countries.map((country) => (
 <CountryCard
+         key={country.alpha3Code}
          name={country.name}
          flag={country.flag}
          capital={country.capital}
@@ -51,13 +54,10 @@ const HomePage = () => {
        />
      ))}
      {selectedCountry && (
-<WeatherModal
-         isOpen={isModalOpen}
-         onRequestClose={closeModal}
-         weatherData={weatherData}
-       />
+<WeatherModal isOpen={isModalOpen} onRequestClose={closeModal} weatherData={weatherData} />
      )}
 </div>
+</>
  );
 };
 export default HomePage;
